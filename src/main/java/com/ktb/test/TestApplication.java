@@ -24,7 +24,6 @@ import org.springframework.web.client.RestTemplate;
 import com.google.gson.Gson;
 import com.ktb.model.Messages;
 import com.ktb.model.TextMessage;
-import com.sun.xml.internal.messaging.saaj.packaging.mime.Header;
 
 public class TestApplication {
 	
