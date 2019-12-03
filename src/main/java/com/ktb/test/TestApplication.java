@@ -6,27 +6,62 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.Assert;
+import org.springframework.http.MediaType;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
 import com.ktb.model.Messages;
 import com.ktb.model.TextMessage;
+import com.sun.xml.internal.messaging.saaj.packaging.mime.Header;
 
 public class TestApplication {
 	
+	@Autowired
+	private static RestTemplate restTemplate;
+	
+	@Autowired
+	private static HttpHeaders header;
+	
+	@Autowired
+	static JavaMailSender mailSender;
+	
 	private static final Logger log = LoggerFactory.getLogger(TestApplication.class);
+	
+
+	public static void main(String[] args) {
+		
+//		broadcastMessage();
+//		pushMessage();
+		sendEmail();
+
+	}
+	
+	private static void sendEmail() {
+		try {
+			SimpleMailMessage msg = new SimpleMailMessage();
+	        msg.setTo("nontapap.th@gmail.com");
+	        msg.setSubject("Testing from Spring Boot");
+	        msg.setText("Hello World \n Spring Boot Email");
+
+	        mailSender.send(msg);
+	        //.send(msg);
+	        
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	private static String createJsonText() {
 		
@@ -55,6 +90,20 @@ public class TestApplication {
 	    return gson.toJson(textMessage);
 	}
 	
+	private static void pushRestTemplate() {
+		
+		HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+	    JSONObject personJsonObject = new JSONObject();
+	    personJsonObject.put("id", 1);
+	    personJsonObject.put("name", "John");
+		String urlStr = "https://glacial-peak-48383.herokuapp.com/bcbot/pushMessage";
+		String input = createJsonText();
+		String reResponse = restTemplate.exchange("", HttpMethod.POST
+				, null, new String().getClass()).getBody();
+		log.info(reResponse);
+	}
+	
 	private static void pushMessage() {
 		
 		try {
@@ -71,6 +120,7 @@ public class TestApplication {
 //					+ "{\"type\": \"text\", \"text\": \"ลูกค้าของท่านเลยกำหนดระยะเวลา\"}, "
 //					+ "{\"type\": \"text\", \"text\": \"รบกวนติดต่อสอบถาม\"} ]"
 //					+ "}";
+			
 			log.info("call create json text");
 			String input = createJsonText();
 			log.info(input);
@@ -154,7 +204,7 @@ public class TestApplication {
 		
 //		RestTemplate restTemplate = new RestTemplate();
 //	     
-//	    final String baseUrl = "https://glacial-peak-48383.herokuapp.com/bcbot/broadcastMessage";
+//	    String baseUrl = "https://glacial-peak-48383.herokuapp.com/bcbot/broadcastMessage";
 //	    URI uri = new URI(baseUrl);
 //	     
 //	    HttpHeaders headers = new HttpHeaders();
@@ -172,9 +222,6 @@ public class TestApplication {
 		return "";
 	}
 	
-	public static void main(String[] args) {
-		
-		broadcastMessage();
-
-	}
 }
+
+
