@@ -1,4 +1,4 @@
-package com.ktb.bc;
+package com.ktb;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
