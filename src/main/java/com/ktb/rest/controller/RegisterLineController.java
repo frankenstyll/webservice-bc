@@ -56,7 +56,7 @@ public class RegisterLineController {
             message.setFrom("nontapap.th@gmail.com");
             message.setTo("nontapap.th@gmail.com");
             message.setSubject("RM Register OTP");
-            message.setText("<html>รหัส OTP ของคุณคือ <font color='red'>" + OTP + "</font> (Ref : "+ refNumber +")</html>");
+            message.setText("รหัส OTP ของคุณคือ " + OTP + " (Ref : "+ refNumber +")");
             sendMailServices.sendTextEmail(message);
 			
 			//5.response result
