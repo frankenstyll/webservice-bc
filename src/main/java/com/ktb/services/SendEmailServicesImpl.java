@@ -25,7 +25,7 @@ public class SendEmailServicesImpl implements SendEmailServices{
 				SimpleMailMessage messageSimple = new SimpleMailMessage();
 	            String from = "nontapap.th@gmail.com";
 	            String to = "nontapap.th@gmail.com";
-	            String subject = "HELLO OTP";
+	            String subject = "TEST OTP";
 	            String body = "Hello world OTP";
 	            messageSimple.setFrom(from);
 	            messageSimple.setTo(to);
