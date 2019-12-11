@@ -48,6 +48,12 @@ public class RegisterLineController {
 		
 		return new Gson().toJson(x);
 	}
+	@GetMapping("/testQuery2")
+	public @ResponseBody String testQuery2(){
+		log.info("testQuery info");
+		 Map<String, Object> x = daoServices.findMapEmployeeById("");
+		return new Gson().toJson(x);
+	}
 	
 	@GetMapping("/validateRequestOTP")
 	public @ResponseBody String validateRequestOTP(@ModelAttribute Register register) {
