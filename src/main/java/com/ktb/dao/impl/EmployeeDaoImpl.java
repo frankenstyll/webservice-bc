@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +33,9 @@ public class EmployeeDaoImpl implements EmployeeDao{
 
 	@Override
 	public List<EmployeeModel> loadAllEmployee() {
-		String sql = "select * from employee";
-	    List<EmployeeModel> rows = jdbcTemplate.queryForList(sql, EmployeeModel.class);
+		String sql = "select * from employee where employee_id = '620670' ";
+		List<EmployeeModel> rows = jdbcTemplate.queryForList(sql, EmployeeModel.class);
+				//BeanPropertyRowMapper.newInstance(EmployeeModel.class));
 	    
 //	    List<EmployeeModel> result = new ArrayList<EmployeeModel>();
 //	    for( Map<String, Object> row : rows ){
