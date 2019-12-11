@@ -46,4 +46,10 @@ public class TestRestController {
 		 EmployeeModel x = daoServices.findEmployeeById("620670");
 		return new Gson().toJson(x);
 	}
+	@GetMapping("/searchmapbyid")
+	public @ResponseBody String searchmapbyid(){
+		log.info("searchbyid info");
+		 Map<String, Object> x = daoServices.findMapEmployeeById("620670");
+		return new Gson().toJson(x);
+	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -53,7 +54,7 @@ public class EmployeeDaoImpl implements EmployeeDao{
 		String sql = " select * from employee where employee_id = ? ";
 		EmployeeModel emp = jdbcTemplate.queryForObject(sql, 
 				new Object[] {empId},
-				EmployeeModel.class);
+				new BeanPropertyRowMapper<EmployeeModel>(EmployeeModel.class));
 	    return emp;
 	}
 
