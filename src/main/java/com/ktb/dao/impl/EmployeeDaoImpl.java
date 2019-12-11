@@ -8,22 +8,20 @@ import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import com.ktb.dao.EmployeeDao;
 import com.ktb.model.EmployeeModel;
 
-@Repository
-public class EmployeeDaoImpl extends JdbcDaoSupport implements EmployeeDao{
+@Service
+public class EmployeeDaoImpl implements EmployeeDao{
     
-	@Autowired 
-    DataSource dataSource;
+	@Autowired
+	JdbcTemplate jdbcTemplate;
  
-    @PostConstruct
-    private void initialize(){
-        setDataSource(dataSource);
-    }
     
 	@Override
 	public void insert(EmployeeModel emp) {
@@ -40,7 +38,7 @@ public class EmployeeDaoImpl extends JdbcDaoSupport implements EmployeeDao{
 	@Override
 	public List<EmployeeModel> loadAllEmployee() {
 		String sql = "select * from employee";
-	    List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
+	    List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
 	    
 	    List<EmployeeModel> result = new ArrayList<EmployeeModel>();
 	    for( Map<String, Object> row : rows ){
