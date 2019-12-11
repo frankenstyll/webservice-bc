@@ -1,4 +1,4 @@
-package com.ktb.services;
+package com.ktb.services.impl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,6 +8,10 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
+import com.ktb.services.SendEmailServices;
+
+
 
 @Service
 public class SendEmailServicesImpl implements SendEmailServices{

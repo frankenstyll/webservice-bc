@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
-import com.ktb.dao.services.BCLinecareDAOServices;
+
 import com.ktb.model.EmployeeModel;
 import com.ktb.model.Register;
+import com.ktb.services.BCLinecareDAOServices;
 import com.ktb.services.SendEmailServices;
 import com.ktb.utils.StringUtils;
+
 
 @RestController
 public class RegisterLineController {
@@ -42,7 +44,7 @@ public class RegisterLineController {
 	public @ResponseBody String testQuery(){
 		log.info("testQuery info");
 		
-		List<EmployeeModel> x = daoServices.searchEmployee("620670");
+		 List<EmployeeModel> x = daoServices.loadAllEmployee();
 		
 		return new Gson().toJson(x);
 	}
