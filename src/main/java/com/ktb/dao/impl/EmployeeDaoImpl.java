@@ -33,10 +33,9 @@ public class EmployeeDaoImpl implements EmployeeDao{
 
 	@Override
 	public List<EmployeeModel> loadAllEmployee() {
-		String sql = "select * from employee where employee_id = ? ";
+		String sql = " select * from employee where employee_id = ? ";
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, 
-				new Object[] {"620670"},
-				BeanPropertyRowMapper.newInstance(EmployeeModel.class));
+				new Object[] {"620670"});
 	    
 	    List<EmployeeModel> result = new ArrayList<EmployeeModel>();
 	    for( Map<String, Object> row : rows ){
