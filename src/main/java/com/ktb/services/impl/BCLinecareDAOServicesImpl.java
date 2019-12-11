@@ -15,7 +15,6 @@ import com.ktb.dao.EmployeeDao;
 import com.ktb.model.EmployeeModel;
 import com.ktb.services.BCLinecareDAOServices;
 
-@Component
 @Service
 public class BCLinecareDAOServicesImpl  implements BCLinecareDAOServices{
 
@@ -23,9 +22,6 @@ public class BCLinecareDAOServicesImpl  implements BCLinecareDAOServices{
 	
 	@Autowired
 	EmployeeDao employeeDao;
-	
-	@Autowired
-	JdbcTemplate jdbcTemplate;
 	
 	@Override
 	public List<EmployeeModel> loadAllEmployee() {
@@ -35,15 +31,12 @@ public class BCLinecareDAOServicesImpl  implements BCLinecareDAOServices{
 
 	@Override
 	public EmployeeModel findEmployeeById(String empId) {
-		String sql = "select * from employee where employee_id = '620670' ";
-		EmployeeModel rows = jdbcTemplate.queryForObject(sql, EmployeeModel.class);
-		
-		return rows;
+		return null;
 	}
+
 	@Override
-	public Map<String,Object> findMapEmployeeById(String empId) {
-		String sql = "select * from employee where employee_id = '620670' ";
-		Map<String,Object> rows = jdbcTemplate.queryForMap(sql);
-		return rows;
+	public Map<String, Object> findMapEmployeeById(String empId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

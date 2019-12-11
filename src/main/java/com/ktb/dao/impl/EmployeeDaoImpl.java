@@ -4,13 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.ktb.dao.EmployeeDao;
@@ -38,19 +33,19 @@ public class EmployeeDaoImpl implements EmployeeDao{
 	@Override
 	public List<EmployeeModel> loadAllEmployee() {
 		String sql = "select * from employee";
-	    List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+	    List<EmployeeModel> rows = jdbcTemplate.queryForList(sql, EmployeeModel.class);
 	    
-	    List<EmployeeModel> result = new ArrayList<EmployeeModel>();
-	    for( Map<String, Object> row : rows ){
-	    	EmployeeModel emp = new EmployeeModel();
-	    	emp.setEmployeeId((String)row.get("employee_id"));
-	    	emp.setEmployeeEmail((String)row.get("employee_email"));
-	    	emp.setEmployeeRole((String)row.get("employee_role"));
-	    	emp.setEmployeeStatus((String)row.get("employee_status"));
-	    	result.add(emp);
-	    }
+//	    List<EmployeeModel> result = new ArrayList<EmployeeModel>();
+//	    for( Map<String, Object> row : rows ){
+//	    	EmployeeModel emp = new EmployeeModel();
+//	    	emp.setEmployeeId((String)row.get("employee_id"));
+//	    	emp.setEmployeeEmail((String)row.get("employee_email"));
+//	    	emp.setEmployeeRole((String)row.get("employee_role"));
+//	    	emp.setEmployeeStatus((String)row.get("employee_status"));
+//	    	result.add(emp);
+//	    }
 	    
-	    return result;
+	    return rows;
 	}
 
 	@Override
