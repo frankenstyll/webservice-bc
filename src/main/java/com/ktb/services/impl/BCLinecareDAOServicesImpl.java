@@ -35,14 +35,14 @@ public class BCLinecareDAOServicesImpl  implements BCLinecareDAOServices{
 
 	@Override
 	public EmployeeModel findEmployeeById(String empId) {
-		String sql = "select * from employee employee_id = '620670' ";
+		String sql = "select * from employee where employee_id = '620670' ";
 		EmployeeModel rows = jdbcTemplate.queryForObject(sql, EmployeeModel.class);
 		
 		return rows;
 	}
 	@Override
 	public Map<String,Object> findMapEmployeeById(String empId) {
-		String sql = "select * from employee employee_id = '620670' ";
+		String sql = "select * from employee where employee_id = '620670' ";
 		Map<String,Object> rows = jdbcTemplate.queryForMap(sql);
 		return rows;
 	}
