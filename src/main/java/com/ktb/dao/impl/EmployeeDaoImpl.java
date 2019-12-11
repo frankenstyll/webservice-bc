@@ -33,21 +33,22 @@ public class EmployeeDaoImpl implements EmployeeDao{
 
 	@Override
 	public List<EmployeeModel> loadAllEmployee() {
-		String sql = "select * from employee where employee_id = '620670' ";
-		List<EmployeeModel> rows = jdbcTemplate.queryForList(sql, EmployeeModel.class);
-				//BeanPropertyRowMapper.newInstance(EmployeeModel.class));
+		String sql = "select * from employee where employee_id = ? ";
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, 
+				new Object[] {"620670"},
+				BeanPropertyRowMapper.newInstance(EmployeeModel.class));
 	    
-//	    List<EmployeeModel> result = new ArrayList<EmployeeModel>();
-//	    for( Map<String, Object> row : rows ){
-//	    	EmployeeModel emp = new EmployeeModel();
-//	    	emp.setEmployeeId((String)row.get("employee_id"));
-//	    	emp.setEmployeeEmail((String)row.get("employee_email"));
-//	    	emp.setEmployeeRole((String)row.get("employee_role"));
-//	    	emp.setEmployeeStatus((String)row.get("employee_status"));
-//	    	result.add(emp);
-//	    }
+	    List<EmployeeModel> result = new ArrayList<EmployeeModel>();
+	    for( Map<String, Object> row : rows ){
+	    	EmployeeModel emp = new EmployeeModel();
+	    	emp.setEmployeeId((String)row.get("employee_id"));
+	    	emp.setEmployeeEmail((String)row.get("employee_email"));
+	    	emp.setEmployeeRole((String)row.get("employee_role"));
+	    	emp.setEmployeeStatus((String)row.get("employee_status"));
+	    	result.add(emp);
+	    }
 	    
-	    return rows;
+	    return result;
 	}
 
 	@Override
