@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +32,8 @@ public class EmployeeDaoImpl implements EmployeeDao{
 
 	@Override
 	public List<EmployeeModel> loadAllEmployee() {
-		String sql = " select * from employee where employee_id = ? ";
-		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, 
-				new Object[] {"620670"});
+		String sql = " select * from employee";
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
 	    
 	    List<EmployeeModel> result = new ArrayList<EmployeeModel>();
 	    for( Map<String, Object> row : rows ){
@@ -52,10 +50,22 @@ public class EmployeeDaoImpl implements EmployeeDao{
 
 	@Override
 	public EmployeeModel findEmployeeById(String empId) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = " select * from employee where employee_id = ? ";
+		EmployeeModel emp = jdbcTemplate.queryForObject(sql, 
+				new Object[] {empId},
+				EmployeeModel.class);
+	    return emp;
 	}
 
+	@Override
+	public Map<String,Object> findMapEmployeeById(String empId) {
+		String sql = " select * from employee where employee_id = ? ";
+		Map<String,Object> emp = jdbcTemplate.queryForMap(sql, 
+				new Object[] {empId});
+	    return emp;
+	}
+	
+	
 	@Override
 	public String findNameById(String empId) {
 		// TODO Auto-generated method stub

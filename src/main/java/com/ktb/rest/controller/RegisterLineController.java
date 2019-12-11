@@ -34,27 +34,6 @@ public class RegisterLineController {
 	@Autowired
 	BCLinecareDAOServices daoServices;
 	
-	@GetMapping("/sendMail")
-	public @ResponseBody String sendMail(){
-		log.info("sendmail info");
-		return new Gson().toJson(sendMailServices.sendTextEmail(null));
-	}
-
-	@GetMapping("/testQuery")
-	public @ResponseBody String testQuery(){
-		log.info("testQuery info");
-		
-		 List<EmployeeModel> x = daoServices.loadAllEmployee();
-		
-		return new Gson().toJson(x);
-	}
-	@GetMapping("/testQuery2")
-	public @ResponseBody String testQuery2(){
-		log.info("testQuery info");
-		 Map<String, Object> x = daoServices.findMapEmployeeById("");
-		return new Gson().toJson(x);
-	}
-	
 	@GetMapping("/validateRequestOTP")
 	public @ResponseBody String validateRequestOTP(@ModelAttribute Register register) {
 		log.info("validateRequestOTP info");
@@ -94,12 +73,5 @@ public class RegisterLineController {
 		  }
 		
 		return resp;
-	}
-	
-	private static void getEmployees(){
-	    final String uri = "http://localhost:8080/springrestexample/employees.xml";
-	    RestTemplate restTemplate = new RestTemplate();
-	    String result = restTemplate.getForObject(uri, String.class);
-	    System.out.println(result);
 	}
 }

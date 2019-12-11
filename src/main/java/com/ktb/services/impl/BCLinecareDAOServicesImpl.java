@@ -31,12 +31,11 @@ public class BCLinecareDAOServicesImpl  implements BCLinecareDAOServices{
 
 	@Override
 	public EmployeeModel findEmployeeById(String empId) {
-		return null;
+		return employeeDao.findEmployeeById(empId);
 	}
 
 	@Override
 	public Map<String, Object> findMapEmployeeById(String empId) {
-		// TODO Auto-generated method stub
-		return null;
+		return employeeDao.findMapEmployeeById(empId);
 	}
 }
