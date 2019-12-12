@@ -1,13 +1,15 @@
 package com.ktb.services;
 
-import java.util.List;
-import java.util.Map;
-
 import com.ktb.model.EmployeeModel;
+import com.ktb.model.RegisterModel;
 
 public interface BCLinecareDAOServices {
 
-	List<EmployeeModel> loadAllEmployee();
 	EmployeeModel findEmployeeById(String empId);
-	Map<String,Object> findMapEmployeeById(String empId);
+	
+	void insertRegisterOtp(RegisterModel regis);
+	
+	RegisterModel validateOtp(RegisterModel regis);
+	
+	void resetOtp(RegisterModel regis);
 }

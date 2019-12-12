@@ -18,10 +18,8 @@ public class EmployeeDaoImpl implements EmployeeDao{
 	@Autowired
 	JdbcTemplate jdbcTemplate;
  
-    
 	@Override
 	public void insert(EmployeeModel emp) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -55,7 +53,7 @@ public class EmployeeDaoImpl implements EmployeeDao{
 		EmployeeModel emp = jdbcTemplate.queryForObject(sql, 
 				new Object[] {empId},
 				new BeanPropertyRowMapper<EmployeeModel>(EmployeeModel.class));
-	    return emp;
+		return emp;
 	}
 
 	@Override

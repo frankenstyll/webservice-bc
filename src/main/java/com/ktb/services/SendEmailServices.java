@@ -3,7 +3,6 @@ package com.ktb.services;
 import java.util.Map;
 
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.stereotype.Service;
 
 public interface SendEmailServices {
 
