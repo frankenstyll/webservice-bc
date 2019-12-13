@@ -44,13 +44,13 @@ public class BCLinecareDAOServicesImpl  implements BCLinecareDAOServices{
 
 	@Override
 	public RegisterModel validateOtp(RegisterModel regis) {
+		
 		Date cu = new Date();
 		
 		RegisterModel va = registerDao.validateOtp(regis);
+		log.info(va.toString());
 		if(null != va) {
-			
 			if (va.getExpire().before(cu)) {
-				
 				registerDao.updateStatusFlag(regis);
 				va.setStatus(WebConstant.SUCCESS_CODE);
 				

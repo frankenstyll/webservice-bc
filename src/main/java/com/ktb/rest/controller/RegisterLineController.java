@@ -81,7 +81,6 @@ public class RegisterLineController {
             step += "Set Response; ";
 			m.put(WebConstant.STATUS_TEXT, WebConstant.SUCCESS_CODE);
 			m.put("ref_number", refNumber);
-			m.put("employee_id" , register.getEmployeeId());
 			m.put("step", step);
             
 		  } catch (Exception e) {
@@ -99,21 +98,24 @@ public class RegisterLineController {
 	public @ResponseBody String validateOTP(@ModelAttribute RegisterModel register) {
 		log.info("validateOTP info");
 		
+		String step = "";
 		String resp = "";
 		Map<String,Object> m = new HashMap<String,Object>();
 		try {
 			
 			log.info("search otp");
+			step += "search otp -> ";
 			RegisterModel resultValidate = bcLinecareDao.validateOtp(register);
 			if( null != resultValidate) {
 				
 				if(WebConstant.SUCCESS_CODE.equals(resultValidate.getStatus())) {
 					
 					log.info("insert rm line");
+					step += "insert rm line -> ";
 					int tiger = bcLinecareDao.insertRmLine(register.getEmployeeId(), register.getUserId());
 					if(1 == tiger) {
-
 						log.info("response success");
+						step += "response success ";
 						m.put(WebConstant.STATUS_TEXT, WebConstant.SUCCESS_CODE);
 						
 					}else {
@@ -139,7 +141,8 @@ public class RegisterLineController {
 			m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
 			m.put(WebConstant.MESSAGE_TEXT, e.getMessage());
 		  } finally {
-			resp = new Gson().toJson(m);
+			  m.put("step", step);
+			  resp = new Gson().toJson(m);
 		  }
 		
 		return resp;
