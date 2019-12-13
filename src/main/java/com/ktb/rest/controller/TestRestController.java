@@ -50,9 +50,9 @@ public class TestRestController {
 		return new Gson().toJson(x);
 	}
 	@GetMapping("/searchmapbyid")
-	public @ResponseBody String searchmapbyid(){
+	public @ResponseBody String searchmapbyid(@RequestParam String employeeId){
 		log.info("searchbyid info");
-		Map<String, Object> x = employeeDao.findMapEmployeeById("620670");
+		Map<String, Object> x = employeeDao.findMapEmployeeById(employeeId);
 		return new Gson().toJson(x);
 	}
 }

@@ -64,7 +64,6 @@ public class EmployeeDaoImpl implements EmployeeDao{
 	    return emp;
 	}
 	
-	
 	@Override
 	public String findNameById(String empId) {
 		// TODO Auto-generated method stub
