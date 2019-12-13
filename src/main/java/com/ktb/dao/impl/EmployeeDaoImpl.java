@@ -49,10 +49,15 @@ public class EmployeeDaoImpl implements EmployeeDao{
 
 	@Override
 	public EmployeeModel findEmployeeById(String empId) {
-		String sql = " select * from employee where employee_id = ? ";
-		EmployeeModel emp = jdbcTemplate.queryForObject(sql, 
-				new Object[] {empId},
-				new BeanPropertyRowMapper<EmployeeModel>(EmployeeModel.class));
+		EmployeeModel emp = null;
+		try {
+			String sql = " select * from employee where employee_id = ? ";
+			emp = jdbcTemplate.queryForObject(sql, 
+					new Object[] {empId},
+					new BeanPropertyRowMapper<EmployeeModel>(EmployeeModel.class));
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		return emp;
 	}
 
