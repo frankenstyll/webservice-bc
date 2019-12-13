@@ -20,7 +20,7 @@ public interface RegisterDao {
 	  
 	  RegisterModel validateOtp(RegisterModel regis);
 
-	  void resetOtp(RegisterModel regis);
+	  int resetOtp(RegisterModel regis);
 	  
 	  int updateStatusFlag(RegisterModel regis) ;
 }

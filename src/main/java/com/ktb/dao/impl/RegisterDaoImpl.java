@@ -18,48 +18,69 @@ public class RegisterDaoImpl implements RegisterDao{
 
 	@Override
 	public int insert(RegisterModel regis) {
-		String sql = " 	insert into register (otp, ref_number, created, expire, employee_id , status) " + 
-				"	values(?,?, now() , (now() + time '00:05') , ? , 'N')";
-		
-		return jdbcTemplate.update(sql, new Object[] {
-			regis.getOtp(), regis.getRefNumber(), regis.getEmployeeId()	
-		});
-		
+		int count = 0;
+		try {
+			String sql = " 	insert into register (otp, ref_number, created, expire, employee_id , status) " + 
+					"	values(?,?, now() , (now() + time '00:05') , ? , 'N')";
+			
+			count = jdbcTemplate.update(sql, new Object[] {
+				regis.getOtp(), regis.getRefNumber(), regis.getEmployeeId()	
+			});
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return count;
 	}
 	
 	@Override
 	public RegisterModel validateOtp(RegisterModel regis) {
-		String sql = " 	select * from register " + 
-				"	where employee_id = ? " + 
-				"	and otp = ? " + 
-				"	and ref_number = ? " + 
-				"	and status = 'N' " ;
-		RegisterModel emp = jdbcTemplate.queryForObject(sql, 
-				new Object[] {regis.getEmployeeId() , regis.getOtp(), regis.getRefNumber() },
-				new BeanPropertyRowMapper<RegisterModel>(RegisterModel.class));
-		return emp;
+		RegisterModel reg = null;
+		try {
+			String sql = " 	select * from register " + 
+					"	where employee_id = ? " + 
+					"	and otp = ? " + 
+					"	and ref_number = ? " + 
+					"	and status = 'N' " ;
+			reg = jdbcTemplate.queryForObject(sql, 
+					new Object[] {regis.getEmployeeId() , regis.getOtp(), regis.getRefNumber() },
+					new BeanPropertyRowMapper<RegisterModel>(RegisterModel.class));
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return reg;
 	}
 	
 	@Override
 	public int updateStatusFlag(RegisterModel regis) {
-		
-		String sql = " 	update register set status = ? " + 
-				" where employee_id = ? " +
-				" otp = ? and ref_number = ? ";
-		return jdbcTemplate.update(sql, new Object[] {
-			regis.getStatus(), regis.getEmployeeId(), regis.getOtp(), regis.getRefNumber() 
-		});
+		int count = 0;
+		try {
+			String sql = " 	update register set status = ? " + 
+					" where employee_id = ? " +
+					" otp = ? and ref_number = ? ";
+			count = jdbcTemplate.update(sql, new Object[] {
+				regis.getStatus(), regis.getEmployeeId(), regis.getOtp(), regis.getRefNumber() 
+			});
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return count;
 	}
 
 	@Override
-	public void resetOtp(RegisterModel regis) {
-		
-		String sql = " 	update register set expire = (now() + time '00:05') , otp = ? , ref_number = ? , status = 'N' " + 
-				"	where employee_id = ? and otp = ? and ref_number = ? ";
-		
-		jdbcTemplate.update(sql, new Object[] {
-			regis.getOtp(), regis.getRefNumber(), regis.getEmployeeId() , regis.getOtp(), regis.getRefNumber()	
-		});
+	public int resetOtp(RegisterModel regis) {
+		int count = 0;
+		try {
+			String sql = " 	update register set expire = (now() + time '00:05') , otp = ? , ref_number = ? , status = 'N' " + 
+					"	where employee_id = ? and otp = ? and ref_number = ? ";
+			
+			count = jdbcTemplate.update(sql, new Object[] {
+				regis.getOtp(), regis.getRefNumber(), regis.getEmployeeId() , regis.getOtp(), regis.getRefNumber()	
+			});
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return count;
 	}
 	
 	@Override
@@ -91,8 +112,5 @@ public class RegisterDaoImpl implements RegisterDao{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-
-
 	
 }

@@ -63,10 +63,15 @@ public class EmployeeDaoImpl implements EmployeeDao{
 
 	@Override
 	public Map<String,Object> findMapEmployeeById(String empId) {
-		String sql = " select * from employee where employee_id = ? ";
-		Map<String,Object> emp = jdbcTemplate.queryForMap(sql, 
-				new Object[] {empId});
-	    return emp;
+		Map<String,Object> emp = null;
+		try {
+			String sql = " select * from employee where employee_id = ? ";
+			emp = jdbcTemplate.queryForMap(sql, 
+					new Object[] {empId});
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return emp;
 	}
 	
 	@Override
