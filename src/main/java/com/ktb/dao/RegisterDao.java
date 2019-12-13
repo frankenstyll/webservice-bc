@@ -6,7 +6,7 @@ import com.ktb.model.RegisterModel;
 
 public interface RegisterDao {
 
-	  void insert(RegisterModel regis);
+	  int insert(RegisterModel regis);
 	  
 	  void inserBatch(List<RegisterModel> emps);
 	  
@@ -21,4 +21,6 @@ public interface RegisterDao {
 	  RegisterModel validateOtp(RegisterModel regis);
 
 	  void resetOtp(RegisterModel regis);
+	  
+	  int updateStatusFlag(RegisterModel regis) ;
 }

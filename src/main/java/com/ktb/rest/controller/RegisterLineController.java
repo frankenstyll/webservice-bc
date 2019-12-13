@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.ktb.constant.WebConstant;
+import com.ktb.dao.RmLineDao;
 import com.ktb.model.EmployeeModel;
 import com.ktb.model.RegisterModel;
 import com.ktb.services.BCLinecareDAOServices;
@@ -91,18 +92,41 @@ public class RegisterLineController {
 		Map<String,Object> m = new HashMap<String,Object>();
 		try {
 			
+			log.info("search otp");
 			RegisterModel resultValidate = bcLinecareDao.validateOtp(register);
-			if( null == resultValidate) {
-				m.put(WebConstant.MESSAGE_TEXT, "OTP is expire");
-				m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
+			if( null != resultValidate) {
+				
+				if(WebConstant.SUCCESS_CODE.equals(resultValidate.getStatus())) {
+					
+					log.info("insert rm line");
+					int tiger = bcLinecareDao.insertRmLine(register.getEmployeeId(), register.getUserId());
+					if(1 == tiger) {
+
+						log.info("response success");
+						m.put(WebConstant.STATUS_TEXT, WebConstant.SUCCESS_CODE);
+						
+					}else {
+						log.info("response insert rm line fail");
+						m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
+						m.put(WebConstant.MESSAGE_TEXT, "ไม่สามารถบันทึก Line User ได้");
+					}
+					
+				}else {
+					log.info("response otp is expire");
+					m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
+					m.put(WebConstant.MESSAGE_TEXT, "OTP is expired");
+				}
+				
 			}else {
-				m.put(WebConstant.STATUS_TEXT, WebConstant.SUCCESS_CODE);
+				log.info("response otp is not found");
+				m.put(WebConstant.MESSAGE_TEXT, "OTP ไม่ถูกต้อง กรุณาระบุใหม่อีกครั้ง");
+				m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
 			}
 			//.response result
 			resp = new Gson().toJson(m);
 			
 		  } catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 			m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
 			m.put(WebConstant.MESSAGE_TEXT, e.getMessage());
 		  }
@@ -117,11 +141,21 @@ public class RegisterLineController {
 		String resp = "";
 		Map<String,Object> m = new HashMap<String,Object>();
 		try {
+			//1.generate otp
+			String OTP = StringUtils.generateOTP(6);
 			
+			//2.generate ref number
+			String refNumber = StringUtils.generateRandomStringByUUIDNoDash();
+			
+			//3.update otp
+			register.setOtp(OTP);
+			register.setRefNumber(refNumber);
 			bcLinecareDao.resetOtp(register);
 			
-			//.response result
+			//4.response result
 			m.put(WebConstant.STATUS_TEXT, WebConstant.SUCCESS_CODE);
+			m.put("ref_number", refNumber);
+			
 			resp = new Gson().toJson(m);
 			
 		} catch (Exception e) {

@@ -7,9 +7,13 @@ public interface BCLinecareDAOServices {
 
 	EmployeeModel findEmployeeById(String empId);
 	
-	void insertRegisterOtp(RegisterModel regis);
+	int insertRegisterOtp(RegisterModel regis);
 	
 	RegisterModel validateOtp(RegisterModel regis);
 	
+	int insertRmLine( String employeeId ,String userId);
+	
 	void resetOtp(RegisterModel regis);
+	
+	
 }

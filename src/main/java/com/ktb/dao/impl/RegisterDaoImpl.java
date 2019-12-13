@@ -17,11 +17,11 @@ public class RegisterDaoImpl implements RegisterDao{
 	JdbcTemplate jdbcTemplate;
 
 	@Override
-	public void insert(RegisterModel regis) {
-		String sql = " 	insert into register (otp, ref_number, created, expire, employee_id) " + 
-				"	values(?,?, now() , (now() + time '00:05') , ?)";
+	public int insert(RegisterModel regis) {
+		String sql = " 	insert into register (otp, ref_number, created, expire, employee_id , status) " + 
+				"	values(?,?, now() , (now() + time '00:05') , ? , 'N')";
 		
-		jdbcTemplate.update(sql, new Object[] {
+		return jdbcTemplate.update(sql, new Object[] {
 			regis.getOtp(), regis.getRefNumber(), regis.getEmployeeId()	
 		});
 		
@@ -33,21 +33,32 @@ public class RegisterDaoImpl implements RegisterDao{
 				"	where employee_id = ? " + 
 				"	and otp = ? " + 
 				"	and ref_number = ? " + 
-				"	and expire > now() ";
+				"	and status = 'N' " ;
 		RegisterModel emp = jdbcTemplate.queryForObject(sql, 
 				new Object[] {regis.getEmployeeId() , regis.getOtp(), regis.getRefNumber() },
 				new BeanPropertyRowMapper<RegisterModel>(RegisterModel.class));
 		return emp;
 	}
+	
+	@Override
+	public int updateStatusFlag(RegisterModel regis) {
+		
+		String sql = " 	update register set status = ? " + 
+				" where employee_id = ? " +
+				" otp = ? and ref_number = ? ";
+		return jdbcTemplate.update(sql, new Object[] {
+			regis.getStatus(), regis.getEmployeeId(), regis.getOtp(), regis.getRefNumber() 
+		});
+	}
 
 	@Override
 	public void resetOtp(RegisterModel regis) {
 		
-		String sql = " 	update register set expire = (now() + time '00:05') , otp = ? , ref_number = ? " + 
-				"	where employee_id = ? ";
+		String sql = " 	update register set expire = (now() + time '00:05') , otp = ? , ref_number = ? , status = 'N' " + 
+				"	where employee_id = ? and otp = ? and ref_number = ? ";
 		
 		jdbcTemplate.update(sql, new Object[] {
-			regis.getOtp(), regis.getRefNumber(), regis.getEmployeeId()	
+			regis.getOtp(), regis.getRefNumber(), regis.getEmployeeId() , regis.getOtp(), regis.getRefNumber()	
 		});
 	}
 	
