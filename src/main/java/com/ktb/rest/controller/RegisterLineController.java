@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.ktb.constant.WebConstant;
-import com.ktb.dao.RmLineDao;
 import com.ktb.model.EmployeeModel;
 import com.ktb.model.RegisterModel;
+import com.ktb.model.RmLineModel;
 import com.ktb.services.BCLinecareDAOServices;
 import com.ktb.services.SendEmailServices;
 import com.ktb.utils.StringUtils;
@@ -73,12 +73,12 @@ public class RegisterLineController {
 			m.put(WebConstant.STATUS_TEXT, WebConstant.SUCCESS_CODE);
 			m.put("ref_number", refNumber);
             
-			resp = new Gson().toJson(m);
-			
 		  } catch (Exception e) {
-			e.printStackTrace();
+			  log.error(e.getMessage());
 			m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
 			m.put(WebConstant.MESSAGE_TEXT, e.getMessage());
+		  } finally {
+			resp = new Gson().toJson(m);
 		  }
 		
 		return resp;
@@ -122,13 +122,13 @@ public class RegisterLineController {
 				m.put(WebConstant.MESSAGE_TEXT, "OTP ไม่ถูกต้อง กรุณาระบุใหม่อีกครั้ง");
 				m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
 			}
-			//.response result
-			resp = new Gson().toJson(m);
 			
 		  } catch (Exception e) {
 			log.error(e.getMessage());
 			m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
 			m.put(WebConstant.MESSAGE_TEXT, e.getMessage());
+		  } finally {
+			resp = new Gson().toJson(m);
 		  }
 		
 		return resp;
@@ -156,14 +156,41 @@ public class RegisterLineController {
 			m.put(WebConstant.STATUS_TEXT, WebConstant.SUCCESS_CODE);
 			m.put("ref_number", refNumber);
 			
-			resp = new Gson().toJson(m);
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
 			m.put(WebConstant.MESSAGE_TEXT, e.getMessage());
+			
+		} finally {
+			resp = new Gson().toJson(m);
 		}
 		
+		return resp;
+	}
+	
+	@GetMapping("/isRegistered")
+	public @ResponseBody String isRegistered(@ModelAttribute RegisterModel register) {
+		log.info("isRegistered info");
+		
+		String resp = "";
+		Map<String,Object> m = new HashMap<String,Object>();
+		try {
+			
+			RmLineModel rmModel = bcLinecareDao.searchRmLine(register.getUserId());
+			if(null != rmModel) {
+				m.put(WebConstant.MESSAGE_TEXT, "REGISTERED");
+			}else {
+				m.put(WebConstant.MESSAGE_TEXT, "NEW");
+			}
+			m.put(WebConstant.STATUS_TEXT, WebConstant.SUCCESS_CODE);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
+			m.put(WebConstant.MESSAGE_TEXT, e.getMessage());
+		} finally {
+			resp = new Gson().toJson(m);
+		}
 		return resp;
 	}
 }

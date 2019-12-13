@@ -2,6 +2,7 @@ package com.ktb.services;
 
 import com.ktb.model.EmployeeModel;
 import com.ktb.model.RegisterModel;
+import com.ktb.model.RmLineModel;
 
 public interface BCLinecareDAOServices {
 
@@ -15,5 +16,5 @@ public interface BCLinecareDAOServices {
 	
 	void resetOtp(RegisterModel regis);
 	
-	
+	RmLineModel searchRmLine(String userId);
 }

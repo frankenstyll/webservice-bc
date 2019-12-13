@@ -1,7 +1,5 @@
 package com.ktb.services.impl;
 
-import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.Date;
 
 import org.slf4j.Logger;
@@ -15,6 +13,7 @@ import com.ktb.dao.RegisterDao;
 import com.ktb.dao.RmLineDao;
 import com.ktb.model.EmployeeModel;
 import com.ktb.model.RegisterModel;
+import com.ktb.model.RmLineModel;
 import com.ktb.services.BCLinecareDAOServices;
 
 @Service
@@ -75,7 +74,11 @@ public class BCLinecareDAOServicesImpl  implements BCLinecareDAOServices{
 	@Override
 	public int insertRmLine(String employeeId, String userId) {
 		return rmLineDao.insertRmLine(employeeId, userId);
-		
+	}
+
+	@Override
+	public RmLineModel searchRmLine(String userId) {
+		return rmLineDao.searchRmLine(userId);
 	}
 	
 }
