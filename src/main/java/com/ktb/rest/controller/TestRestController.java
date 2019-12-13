@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,9 +44,9 @@ public class TestRestController {
 	}
 	
 	@GetMapping("/searchbyid")
-	public @ResponseBody String searchbyid(){
+	public @ResponseBody String searchbyid(@RequestParam String employeeId){
 		log.info("searchbyid info");
-		EmployeeModel x = daoServices.findEmployeeById("620670");
+		EmployeeModel x = daoServices.findEmployeeById(employeeId);
 		return new Gson().toJson(x);
 	}
 	@GetMapping("/searchmapbyid")
