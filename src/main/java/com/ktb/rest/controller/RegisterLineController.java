@@ -36,30 +36,37 @@ public class RegisterLineController {
 	@GetMapping("/registerRequestOTP")
 	public @ResponseBody String registerRequestOTP(@ModelAttribute RegisterModel register) {
 		log.info("registerRequestOTP info");
-		
+
+		String step = "";
 		String resp = "";
 		Map<String,Object> m = new HashMap<String,Object>();
 		try {
 			
 			//TODO
 			//1.Search and validate user from LDAP
+			step = "find Employee -> ";
 			EmployeeModel emp = bcLinecareDao.findEmployeeById(register.getEmployeeId());
 			if (null == emp) {
 				throw new Exception("employee is not found!");
 			}
 			
 			//2.generate otp
+			step += " Generate OTP -> ";
 			String OTP = StringUtils.generateOTP(6);
 			
 			//3.generate ref number
+			step += "Generate RefNumber -> ";
 			String refNumber = StringUtils.generateRandomStringByUUIDNoDash();
 			
 			//4.send otp number
+			step += "Create Email message -> ";
 			SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom("nontapap.th@gmail.com");
             message.setTo(emp.getEmployeeEmail());
             message.setSubject("RM Register OTP");
             message.setText("รหัส OTP ของคุณคือ " + OTP + " (Ref : "+ refNumber +")");
+            
+            step += "Send Email to "+emp.getEmployeeEmail()+" -> ";
             sendMailServices.sendTextEmail(message);
 			
             //5.insert otp to DATABASE
@@ -67,11 +74,15 @@ public class RegisterLineController {
 			register.setEmployeeId(emp.getEmployeeId());
 			register.setOtp(OTP);
 			register.setRefNumber(refNumber);
+			step += "Insert registerOTP -> ";
             bcLinecareDao.insertRegisterOtp(register);
             
 			//6.response result
+            step += "Set Response; ";
 			m.put(WebConstant.STATUS_TEXT, WebConstant.SUCCESS_CODE);
 			m.put("ref_number", refNumber);
+			m.put("employee_id" , register.getEmployeeId());
+			m.put("step", step);
             
 		  } catch (Exception e) {
 			  log.error(e.getMessage());
@@ -108,7 +119,7 @@ public class RegisterLineController {
 					}else {
 						log.info("response insert rm line fail");
 						m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
-						m.put(WebConstant.MESSAGE_TEXT, "ไม่สามารถบันทึก Line User ได้");
+						m.put(WebConstant.MESSAGE_TEXT, "Cannot save Line User. please try again or contact administrator");
 					}
 					
 				}else {
@@ -119,7 +130,7 @@ public class RegisterLineController {
 				
 			}else {
 				log.info("response otp is not found");
-				m.put(WebConstant.MESSAGE_TEXT, "OTP ไม่ถูกต้อง กรุณาระบุใหม่อีกครั้ง");
+				m.put(WebConstant.MESSAGE_TEXT, "OTP is invalid. pleas try again");
 				m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
 			}
 			
