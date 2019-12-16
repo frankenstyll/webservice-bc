@@ -152,6 +152,7 @@ public class RegisterLineController {
 			
 		  } catch (Exception e) {
 			log.error(e.getMessage());
+			step += "Exception " + e.getMessage();
 			m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
 			m.put(WebConstant.MESSAGE_TEXT, e.getMessage());
 		  } finally {
