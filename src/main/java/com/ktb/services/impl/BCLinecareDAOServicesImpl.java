@@ -48,20 +48,23 @@ public class BCLinecareDAOServicesImpl  implements BCLinecareDAOServices{
 		Date cu = new Date();
 		
 		RegisterModel va = registerDao.validateOtp(regis);
-		log.info(va.toString());
-		if(null != va) {
-			if (va.getExpire().before(cu)) {
-				registerDao.updateStatusFlag(regis);
-				va.setStatus(WebConstant.SUCCESS_CODE);
-				
-			}else {
-				va.setStatus(WebConstant.FAIL_CODE);
-				va.setMessage("Expire");
-			}
-			
-		}else {
-			return null;
-		}
+		
+//		log.info(va.toString());
+//		if(null != va) {
+//			if (va.getExpire().before(cu)) {
+//				
+//				regis.setStatus(WebConstant.STATUS_ACTIVE);
+//				registerDao.updateStatusFlag(regis);
+//				va.setStatus(WebConstant.SUCCESS_CODE);
+//				
+//			}else {
+//				va.setStatus(WebConstant.FAIL_CODE);
+//				va.setMessage("Expire");
+//			}
+//			
+//		}else {
+//			return null;
+//		}
 		
 		return va;
 	}

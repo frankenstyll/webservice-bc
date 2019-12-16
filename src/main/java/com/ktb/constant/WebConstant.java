@@ -7,4 +7,6 @@ public class WebConstant {
     public static final String SUCCESS_CODE = "0";
     public static final String FAIL_CODE = "1";
     
+    public static final String STATUS_ACTIVE = "Y";
+    public static final String STATUS_INACTIVE = "N";
 }
