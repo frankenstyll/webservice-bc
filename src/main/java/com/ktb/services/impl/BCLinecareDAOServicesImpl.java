@@ -48,6 +48,7 @@ public class BCLinecareDAOServicesImpl  implements BCLinecareDAOServices{
 		Date cu = new Date();
 		
 		RegisterModel va = registerDao.validateOtp(regis);
+		va.setStatus(WebConstant.SUCCESS_CODE);
 		
 //		log.info(va.toString());
 //		if(null != va) {
