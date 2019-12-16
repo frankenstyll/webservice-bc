@@ -107,6 +107,7 @@ public class RegisterLineController {
 			step += "search otp -> ";
 			RegisterModel resultValidate = bcLinecareDao.validateOtp(register);
 			m.put("resultValidate", resultValidate);
+			/*
 			if( null != resultValidate) {
 				
 				if(WebConstant.SUCCESS_CODE.equals(resultValidate.getStatus())) {
@@ -136,6 +137,8 @@ public class RegisterLineController {
 				m.put(WebConstant.MESSAGE_TEXT, "OTP is invalid. pleas try again");
 				m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
 			}
+			*/
+			
 			
 		  } catch (Exception e) {
 			log.error(e.getMessage());
