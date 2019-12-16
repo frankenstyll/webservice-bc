@@ -182,11 +182,17 @@ public class RegisterLineController {
 			//3.update otp
 			step += "update otp - ";
 			int count = bcLinecareDao.resetOtp(oldData, OTP, refNumber);
-			
-			//4.response result
-			step += "set response - ";
-			m.put(WebConstant.STATUS_TEXT, WebConstant.SUCCESS_CODE);
-			m.put("ref_number", refNumber);
+			if(1 == count) {
+				//4.response result
+				step += "set response";
+				m.put(WebConstant.STATUS_TEXT, WebConstant.SUCCESS_CODE);
+				m.put("ref_number", refNumber);
+			}else {
+				//5.response result
+				step += "set response - ";
+				m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
+				m.put(WebConstant.MESSAGE_TEXT, "Can not reset OTP");
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -210,7 +216,11 @@ public class RegisterLineController {
 		Map<String,Object> m = new HashMap<String,Object>();
 		try {
 			
-			RmLineModel rmModel = bcLinecareDao.searchRmLine(register.getUserId());
+			if(StringUtils.isNullOrEmpty(register.getEmployeeId()) && StringUtils.isNullOrEmpty(register.getUserId())) {
+				throw new Exception("Employee ID and User ID is empty!");
+			}
+			
+			RmLineModel rmModel = bcLinecareDao.searchRmLine(register.getUserId() , register.getEmployeeId());
 			if(null != rmModel) {
 				m.put(WebConstant.MESSAGE_TEXT, "REGISTERED");
 			}else {

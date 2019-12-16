@@ -6,5 +6,5 @@ public interface RmLineDao {
 
 	int insertRmLine(String userId, String employeeId);
 	
-	RmLineModel searchRmLine(String userId);
+	RmLineModel searchRmLine(String userId ,String employeeId);
 }

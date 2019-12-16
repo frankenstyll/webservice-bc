@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ktb.dao.RmLineDao;
 import com.ktb.model.RmLineModel;
+import com.ktb.utils.StringUtils;
 
 @Service
 public class RmLineDaoImpl implements RmLineDao{
@@ -29,12 +30,26 @@ public class RmLineDaoImpl implements RmLineDao{
 	}
 
 	@Override
-	public RmLineModel searchRmLine(String userId) {
+	public RmLineModel searchRmLine(String userId , String employeeId) {
 		RmLineModel rm = null;
+		
 		try {
-			String sql = " select * from rm_line where line_id = ? " ;
+			String whereUser = "";
+			String whereEmp = "";
+			
+			if(!StringUtils.isNullOrEmpty(userId)) {
+				whereUser = " and line_id = '"+userId+"' ";
+			}
+			if(!StringUtils.isNullOrEmpty(employeeId)) {
+				whereEmp = " and employee_id = '"+employeeId+"'";
+			}
+			
+			String sql = " select * from rm_line where 1 = 1 "+	
+					" ? "+
+					" ? ";
+			
 			rm = jdbcTemplate.queryForObject(sql, 
-					new Object[] {userId },
+					new Object[] {whereUser, whereEmp },
 					new BeanPropertyRowMapper<RmLineModel>(RmLineModel.class));
 		}catch(Exception e) {
 			e.printStackTrace();

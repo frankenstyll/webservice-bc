@@ -22,8 +22,18 @@ public class StringUtils {
         return UUID.randomUUID().toString().replace("-", "");
     }
     
+    public static Boolean isNullOrEmpty(String v) {
+    	if(null == v) {
+    		return true;
+    	}else if("".equals(v.trim())) {
+    		return true;
+    	}else {
+    		return false;
+    	}
+    }
+    
 //    public static void main(String[] args) {
 //		System.out.println(generateRandomStringByUUIDNoDash(10));
 //	}
-
+    
 }

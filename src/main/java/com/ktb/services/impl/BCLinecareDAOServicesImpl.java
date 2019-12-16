@@ -77,8 +77,8 @@ public class BCLinecareDAOServicesImpl  implements BCLinecareDAOServices{
 	}
 
 	@Override
-	public RmLineModel searchRmLine(String userId) {
-		return rmLineDao.searchRmLine(userId);
+	public RmLineModel searchRmLine(String userId , String employeeID) {
+		return rmLineDao.searchRmLine(userId, employeeID);
 	}
 	
 }
