@@ -52,7 +52,7 @@ public class BCLinecareDAOServicesImpl  implements BCLinecareDAOServices{
 		log.info(va.toString());
 		if(null != va) {
 			
-			if (va.getExpire().before(cu)) {
+			if (cu.before(va.getExpire())) {
 				
 				regis.setStatus(WebConstant.STATUS_ACTIVE);
 				registerDao.updateStatusFlag(regis);

@@ -115,9 +115,9 @@ public class RegisterLineController {
 				 * test
 				 */
 				Date v = new Date();
-				m.put("1", new Date());
-				m.put("2", resultValidate.getExpire());
-				m.put("3", resultValidate.getExpire().before(v));
+				m.put("currentTime", v);
+				m.put("expireTime", resultValidate.getExpire());
+				m.put("Compare", v.before(resultValidate.getExpire()));
 				
 				if(WebConstant.SUCCESS_CODE.equals(resultValidate.getStatus())) {
 					
