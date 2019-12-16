@@ -131,20 +131,23 @@ public class RegisterLineController {
 						
 					}else {
 						log.info("response insert rm line fail");
+						step += "response insert rm line fail";
 						m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
 						m.put(WebConstant.MESSAGE_TEXT, "Cannot save Line User. please try again or contact administrator");
 					}
 					
 				}else {
 					log.info("response otp is expire");
+					step += "response otp is expire";
 					m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
 					m.put(WebConstant.MESSAGE_TEXT, "OTP is expired");
 				}
 				
 			}else {
 				log.info("response otp is not found");
-				m.put(WebConstant.MESSAGE_TEXT, "OTP is invalid. pleas try again");
+				step += "response otp is not found";
 				m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
+				m.put(WebConstant.MESSAGE_TEXT, "OTP is invalid. pleas try again");
 			}
 			
 		  } catch (Exception e) {

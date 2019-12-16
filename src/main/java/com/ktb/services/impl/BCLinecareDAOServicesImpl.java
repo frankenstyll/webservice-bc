@@ -64,8 +64,6 @@ public class BCLinecareDAOServicesImpl  implements BCLinecareDAOServices{
 				va.setMessage("Expire");
 			}
 			
-		}else {
-			return null;
 		}
 		
 		return va;
