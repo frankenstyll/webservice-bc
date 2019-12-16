@@ -56,6 +56,7 @@ public class BCLinecareDAOServicesImpl  implements BCLinecareDAOServices{
 				
 				regis.setStatus(WebConstant.STATUS_ACTIVE);
 				registerDao.updateStatusFlag(regis);
+				
 				va.setStatus(WebConstant.SUCCESS_CODE);
 				
 			}else {

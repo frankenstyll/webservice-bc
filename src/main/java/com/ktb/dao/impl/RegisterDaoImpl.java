@@ -58,7 +58,8 @@ public class RegisterDaoImpl implements RegisterDao{
 		try {
 			String sql = " 	update register set status = ? " + 
 					" where employee_id = ? " +
-					" otp = ? and ref_number = ? ";
+					" and otp = ? "+
+					" and ref_number = ? ";
 			count = jdbcTemplate.update(sql, new Object[] {
 				regis.getStatus(), regis.getEmployeeId(), regis.getOtp(), regis.getRefNumber() 
 			});
