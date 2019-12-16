@@ -15,7 +15,7 @@ public class RmLineDaoImpl implements RmLineDao{
 	JdbcTemplate jdbcTemplate;
 	
 	@Override
-	public int insertRmLine(String userId, String employeeId) {
+	public int insertRmLine(String employeeId, String userId) {
 		int count = 0;
 		try {
 			String sql = " 	insert into rm_line (employee_id, line_id , created) " + 

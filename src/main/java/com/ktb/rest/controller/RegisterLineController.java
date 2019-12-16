@@ -1,5 +1,6 @@
 package com.ktb.rest.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -109,6 +110,14 @@ public class RegisterLineController {
 			RegisterModel resultValidate = bcLinecareDao.validateOtp(register);
 			
 			if( null != resultValidate) {
+				
+				/**
+				 * test
+				 */
+				Date v = new Date();
+				m.put("1", new Date());
+				m.put("2", resultValidate.getExpire());
+				m.put("3", resultValidate.getExpire().before(v));
 				
 				if(WebConstant.SUCCESS_CODE.equals(resultValidate.getStatus())) {
 					
