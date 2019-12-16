@@ -101,11 +101,14 @@ public class RegisterLineController {
 		String step = "";
 		String resp = "";
 		Map<String,Object> m = new HashMap<String,Object>();
+		
+		String val = "";
+		
 		try {
 			
 			log.info("search otp");
 			step += "search otp -> ";
-			m.put(WebConstant.STATUS_TEXT, WebConstant.SUCCESS_CODE);
+			val = register.toString();
 			
 //			RegisterModel resultValidate = bcLinecareDao.validateOtp(register);
 //			m.put("resultValidate", resultValidate);
@@ -148,6 +151,8 @@ public class RegisterLineController {
 			m.put(WebConstant.MESSAGE_TEXT, e.getMessage());
 		  } finally {
 			  m.put("step", step);
+			  m.put(WebConstant.STATUS_TEXT, WebConstant.SUCCESS_CODE);
+			  m.put("val", val);
 			  resp = new Gson().toJson(m);
 		  }
 		
