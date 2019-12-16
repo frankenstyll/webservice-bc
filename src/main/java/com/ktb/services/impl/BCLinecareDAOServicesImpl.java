@@ -48,8 +48,6 @@ public class BCLinecareDAOServicesImpl  implements BCLinecareDAOServices{
 		Date cu = new Date();
 		
 		RegisterModel va = registerDao.validateOtp(regis);
-		
-		log.info(va.toString());
 		if(null != va) {
 			
 			if (cu.before(va.getExpire())) {
@@ -63,7 +61,6 @@ public class BCLinecareDAOServicesImpl  implements BCLinecareDAOServices{
 				va.setStatus(WebConstant.FAIL_CODE);
 				va.setMessage("Expire");
 			}
-			
 		}
 		
 		return va;
