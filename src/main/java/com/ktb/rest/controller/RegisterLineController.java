@@ -110,38 +110,38 @@ public class RegisterLineController {
 			step += "search otp -> ";
 			val = register.toString();
 			
-			RegisterModel resultValidate = bcLinecareDao.validateOtp(register);
-			m.put("resultValidate", resultValidate);
-			
-			if( null != resultValidate) {
-				
-				if(WebConstant.SUCCESS_CODE.equals(resultValidate.getStatus())) {
-					
-					log.info("insert rm line");
-					step += "insert rm line -> ";
-					int tiger = bcLinecareDao.insertRmLine(register.getEmployeeId(), register.getUserId());
-					if(1 == tiger) {
-						log.info("response success");
-						step += "response success ";
-						m.put(WebConstant.STATUS_TEXT, WebConstant.SUCCESS_CODE);
-						
-					}else {
-						log.info("response insert rm line fail");
-						m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
-						m.put(WebConstant.MESSAGE_TEXT, "Cannot save Line User. please try again or contact administrator");
-					}
-					
-				}else {
-					log.info("response otp is expire");
-					m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
-					m.put(WebConstant.MESSAGE_TEXT, "OTP is expired");
-				}
-				
-			}else {
-				log.info("response otp is not found");
-				m.put(WebConstant.MESSAGE_TEXT, "OTP is invalid. pleas try again");
-				m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
-			}
+//			RegisterModel resultValidate = bcLinecareDao.validateOtp(register);
+//			m.put("resultValidate", resultValidate);
+//			
+//			if( null != resultValidate) {
+//				
+//				if(WebConstant.SUCCESS_CODE.equals(resultValidate.getStatus())) {
+//					
+//					log.info("insert rm line");
+//					step += "insert rm line -> ";
+//					int tiger = bcLinecareDao.insertRmLine(register.getEmployeeId(), register.getUserId());
+//					if(1 == tiger) {
+//						log.info("response success");
+//						step += "response success ";
+//						m.put(WebConstant.STATUS_TEXT, WebConstant.SUCCESS_CODE);
+//						
+//					}else {
+//						log.info("response insert rm line fail");
+//						m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
+//						m.put(WebConstant.MESSAGE_TEXT, "Cannot save Line User. please try again or contact administrator");
+//					}
+//					
+//				}else {
+//					log.info("response otp is expire");
+//					m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
+//					m.put(WebConstant.MESSAGE_TEXT, "OTP is expired");
+//				}
+//				
+//			}else {
+//				log.info("response otp is not found");
+//				m.put(WebConstant.MESSAGE_TEXT, "OTP is invalid. pleas try again");
+//				m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
+//			}
 			
 		  } catch (Exception e) {
 			log.error(e.getMessage());
