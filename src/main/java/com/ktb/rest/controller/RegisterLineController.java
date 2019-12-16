@@ -144,7 +144,6 @@ public class RegisterLineController {
 			m.put(WebConstant.MESSAGE_TEXT, e.getMessage());
 		  } finally {
 			  m.put("step", step);
-			  m.put(WebConstant.STATUS_TEXT, WebConstant.SUCCESS_CODE);
 			  resp = new Gson().toJson(m);
 		  }
 		
