@@ -105,8 +105,10 @@ public class RegisterLineController {
 			
 			log.info("search otp");
 			step += "search otp -> ";
-			RegisterModel resultValidate = bcLinecareDao.validateOtp(register);
-			m.put("resultValidate", resultValidate);
+			m.put(WebConstant.STATUS_TEXT, WebConstant.SUCCESS_CODE);
+			
+//			RegisterModel resultValidate = bcLinecareDao.validateOtp(register);
+//			m.put("resultValidate", resultValidate);
 			/*
 			if( null != resultValidate) {
 				
