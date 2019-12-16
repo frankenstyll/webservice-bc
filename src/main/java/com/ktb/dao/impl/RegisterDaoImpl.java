@@ -45,6 +45,7 @@ public class RegisterDaoImpl implements RegisterDao{
 			reg = jdbcTemplate.queryForObject(sql, 
 					new Object[] {regis.getEmployeeId() , regis.getOtp(), regis.getRefNumber() },
 					new BeanPropertyRowMapper<RegisterModel>(RegisterModel.class));
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
