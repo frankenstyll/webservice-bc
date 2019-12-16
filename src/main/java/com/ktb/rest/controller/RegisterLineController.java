@@ -147,7 +147,7 @@ public class RegisterLineController {
 				log.info("response otp is not found");
 				step += "response otp is not found";
 				m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
-				m.put(WebConstant.MESSAGE_TEXT, "OTP is invalid. pleas try again");
+				m.put(WebConstant.MESSAGE_TEXT, "OTP is invalid. please try again");
 			}
 			
 		  } catch (Exception e) {
@@ -164,33 +164,38 @@ public class RegisterLineController {
 	}
 	
 	@GetMapping("/resetOTP")
-	public @ResponseBody String resetOTP(@ModelAttribute RegisterModel register) {
+	public @ResponseBody String resetOTP(@ModelAttribute RegisterModel oldData) {
 		log.info("resetOTP info");
 		
+		String step = "";
 		String resp = "";
 		Map<String,Object> m = new HashMap<String,Object>();
 		try {
 			//1.generate otp
+			step += "generate otp - ";
 			String OTP = StringUtils.generateOTP(6);
 			
 			//2.generate ref number
+			step += "generate ref number - ";
 			String refNumber = StringUtils.generateRandomStringByUUIDNoDash();
 			
 			//3.update otp
-			register.setOtp(OTP);
-			register.setRefNumber(refNumber);
-			bcLinecareDao.resetOtp(register);
+			step += "update otp - ";
+			int count = bcLinecareDao.resetOtp(oldData, OTP, refNumber);
 			
 			//4.response result
+			step += "set response - ";
 			m.put(WebConstant.STATUS_TEXT, WebConstant.SUCCESS_CODE);
 			m.put("ref_number", refNumber);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			step += "Exception " + e.getMessage();
 			m.put(WebConstant.STATUS_TEXT, WebConstant.FAIL_CODE);
 			m.put(WebConstant.MESSAGE_TEXT, e.getMessage());
 			
 		} finally {
+			m.put("step", step);
 			resp = new Gson().toJson(m);
 		}
 		

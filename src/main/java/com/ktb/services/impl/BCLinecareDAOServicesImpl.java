@@ -67,8 +67,8 @@ public class BCLinecareDAOServicesImpl  implements BCLinecareDAOServices{
 	}
 
 	@Override
-	public void resetOtp(RegisterModel regis) {
-		registerDao.resetOtp(regis);
+	public int resetOtp(RegisterModel oldData , String newOtp , String newRefNumber) {
+		return registerDao.resetOtp(oldData, newOtp, newRefNumber);
 	}
 
 	@Override

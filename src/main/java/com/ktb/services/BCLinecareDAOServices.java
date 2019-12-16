@@ -14,7 +14,7 @@ public interface BCLinecareDAOServices {
 	
 	int insertRmLine( String employeeId ,String userId);
 	
-	void resetOtp(RegisterModel regis);
+	int resetOtp(RegisterModel oldData, String newOtp, String newRefNumber);
 	
 	RmLineModel searchRmLine(String userId);
 }

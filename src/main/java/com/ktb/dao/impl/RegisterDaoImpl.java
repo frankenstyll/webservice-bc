@@ -70,14 +70,14 @@ public class RegisterDaoImpl implements RegisterDao{
 	}
 
 	@Override
-	public int resetOtp(RegisterModel regis) {
+	public int resetOtp(RegisterModel oldData , String newOtp, String newRefNumber) {
 		int count = 0;
 		try {
 			String sql = " 	update register set expire = (now() + time '00:05') , otp = ? , ref_number = ? , status = 'N' " + 
-					"	where employee_id = ? and otp = ? and ref_number = ? ";
+					"	where employee_id = ? and ref_number = ? ";
 			
 			count = jdbcTemplate.update(sql, new Object[] {
-				regis.getOtp(), regis.getRefNumber(), regis.getEmployeeId() , regis.getOtp(), regis.getRefNumber()	
+					newOtp , newRefNumber, oldData.getEmployeeId() , oldData.getRefNumber()	
 			});
 		}catch(Exception e) {
 			e.printStackTrace();
