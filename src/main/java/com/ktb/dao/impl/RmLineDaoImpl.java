@@ -33,7 +33,7 @@ public class RmLineDaoImpl implements RmLineDao{
 	public RmLineModel searchRmLine(String userId , String employeeId) {
 		RmLineModel rm = null;
 		
-//		try {
+		try {
 			String whereUser = "";
 			String whereEmp = "";
 			
@@ -47,9 +47,9 @@ public class RmLineDaoImpl implements RmLineDao{
 			String sql = " select * from rm_line where 1 = 1 "+	whereUser + whereEmp;
 			
 			rm = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<RmLineModel>(RmLineModel.class));
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		return rm;
 	}
 
