@@ -44,13 +44,9 @@ public class RmLineDaoImpl implements RmLineDao{
 				whereEmp = " and employee_id = '"+employeeId+"'";
 			}
 			
-			String sql = " select * from rm_line where 1 = 1 "+	
-					" ? "+
-					" ? ";
+			String sql = " select * from rm_line where 1 = 1 "+	whereUser + whereEmp;
 			
-			rm = jdbcTemplate.queryForObject(sql, 
-					new Object[] {whereUser, whereEmp },
-					new BeanPropertyRowMapper<RmLineModel>(RmLineModel.class));
+			rm = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<RmLineModel>(RmLineModel.class));
 //		}catch(Exception e) {
 //			e.printStackTrace();
 //		}
